@@ -68,15 +68,17 @@ router.route("/cancelRequest/:id")
     response.send(result)
 })
 
-router.route("/getOrderDetail/:id")
-.get(authAndVerifyUser, async(request, response)=>{
-    const userId = request.user.id
-
+router.get("/getOrderDetail/:id", async(request, response)=>{
     const {id} = request.params
-
+try{
     const result = await getOrderDetailById(id)
-
     response.send(result)
+}
+catch (err){
+    response.json(err.message);
+}
+
+
 })
 
 router.route("/adminGetOrderDetail/:id")

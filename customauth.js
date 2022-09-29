@@ -2,7 +2,8 @@ import jwt from "jsonwebtoken"
 
 export const auth = (request, response, next) =>{
     try{
-        const token = request.header("x-auth-token")
+        const token = request.header("x-auth-token");
+        console.log(token)
         jwt.verify(token, process.env.SECRET_KEY, (err,user)=>{
             if(err){
                 return response.status(403).send({msg:"invalid token"})
