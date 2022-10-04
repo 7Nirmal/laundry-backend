@@ -1,6 +1,7 @@
 import express from "express";
 import {client} from "./index.js";
 import { ObjectId } from "mongodb";
+import { authAndVerifyAdmin } from "./customauth.js"
 
 
 const router = express.Router();
@@ -161,4 +162,40 @@ router.get("/getDeliveryMethods",async function  (request, response) {
     response.send(data)
 })
 
+
+router.get("/adminGetAllServices", async(request, response)=>{
+    const data = await client.db("laundry").collection("services").find({}).toArray();
+    response.send(data)
+})
+
+router.get("/adminGetAllCategoriesForService/:id", async (request, response)=>{
+    const {id} = request.params
+    const data = await client.db("laundry").collection("category").find({serviceId:id}).toArray()
+    response.send(data)
+})
+
+router.get("/adminGetAllProductsForCategory/:id", async (request, response)=>{
+    const {id} = request.params
+    const data = await client.db("laundry").collection("products").find({catId:id}).toArray()
+    response.send(data)
+})
+
+router.delete("/adminDeleteProduct/:id",async(request, response)=>{
+    const {id} = request.params
+    const data = await client.db("laundry").collection("products").deleteOne({_id:ObjectId(id)})
+    response.send(data)
+})
+
+router.get("/adminGetProductById/:id",async(request, response)=>{
+    const {id} = request.params
+    const data =  await client.db("laundry").collection("products").findOne({_id:ObjectId(id)})
+    response.send(data)
+})
+
+
+router.put("/adminUpdateProductById/:id", async(request, response)=>{
+    const {id} = request.params
+    const data = await client.db("laundry").collection("products").updateOne({_id:ObjectId(id)},{$set:{name:request.body.name, rate:parseFloat(request.body.rate)}})
+    response.send(data)
+})
  export const servicerouter = router;

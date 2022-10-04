@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { getuserbyemail,genPassword,createUser } from "./helper.js";
+import { client } from "./index.js";
 
 const router = express.Router();
 
@@ -50,6 +51,10 @@ router.post("/register",async function(req, res) {
         res.status(400).send({msg:"try again.."})
     }
 })
+
+
+
+
 
 export const userrouter = router;
 

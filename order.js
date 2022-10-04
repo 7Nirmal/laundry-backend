@@ -15,7 +15,7 @@ const router = express.Router()
 
 // laundry order
 
-router.post("/placeOrder",authAndVerifyUser, async(request, response)=>{
+router.post("/placeOrder", async(request, response)=>{
     const userId = request.user.id
 
     const {orderDetails} = request.body
@@ -62,7 +62,7 @@ router.post("/placeOrder",authAndVerifyUser, async(request, response)=>{
 })
 
 router.route("/cancelRequest/:id")
-.delete(authAndVerifyUser, async(request, response)=>{
+.delete( async(request, response)=>{
     const {id} = request.params
     const result = await cancelRequest(id)
     response.send(result)
@@ -82,8 +82,7 @@ catch (err){
 })
 
 router.route("/adminGetOrderDetail/:id")
-.get(authAndVerifyAdmin, async(request, response)=>{
-    const userId = request.user.id
+.get(async(request, response)=>{
 
     const {id} = request.params
 
@@ -93,9 +92,8 @@ router.route("/adminGetOrderDetail/:id")
 })
 
 router.route("/userGetOrders")
-.get(authAndVerifyUser, async(request, response)=>{
-    const userId = request.user.id
-
+.post( async(request, response)=>{
+    const userId = request.body.id;
     console.log(userId)
 
     const result = await userGetOrders(userId)
@@ -104,31 +102,31 @@ router.route("/userGetOrders")
 })
 
 router.route("/adminGetAllOrders")
-.get(authAndVerifyAdmin, async(request, response)=>{
+.get( async(request, response)=>{
     const data = await getAllOrders()
     response.send(data)
 })
 
 router.route("/adminGetNewOrders")
-.get(authAndVerifyAdmin, async(request, response)=>{
+.get( async(request, response)=>{
     const data = await getNewOrders()
     response.send(data)
 })
 
 router.route("/adminGetOnProgressOrders")
-.get(authAndVerifyAdmin, async(request, response)=>{
+.get( async(request, response)=>{
     const data = await getOnProgressOrders()
     response.send(data)
 })
 
 router.route("/adminGetCompletedOrders")
-.get(authAndVerifyAdmin, async(request, response)=>{
+.get( async(request, response)=>{
     const data = await getCompletedOrders()
     response.send(data)
 })
 
 router.route("/updateOrderStatus/:id")
-.put(authAndVerifyAdmin, async(request, response)=>{
+.put( async(request, response)=>{
     const {id} = request.params
     const {stage} = request.body
     console.log(stage)
