@@ -1,7 +1,6 @@
 import express from "express";
 import {client} from "./index.js";
 import { ObjectId } from "mongodb";
-import { authAndVerifyAdmin } from "./customauth.js"
 
 
 const router = express.Router();

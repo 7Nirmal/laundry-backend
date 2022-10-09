@@ -1,5 +1,4 @@
 import express from "express"
-import { authAndVerifyAdmin, authAndVerifyUser } from "./customauth.js"
 import {
   placeOrder,
   getOrderDetailById,
